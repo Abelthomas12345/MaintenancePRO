@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MaintenancePRO.App">
+ <Application.Resources><ResourceDictionary>
+  <Color x:Key="Navy">#07111F</Color><Color x:Key="Panel">#111F30</Color><Color x:Key="PanelRaised">#17283B</Color><Color x:Key="Orange">#FF8A00</Color><Color x:Key="Teal">#23C6A5</Color><Color x:Key="Canvas">#080F19</Color><Color x:Key="Ink">#F2F5F9</Color><Color x:Key="Muted">#9AAABD</Color><Color x:Key="Line">#29394D</Color><Color x:Key="Danger">#FF626D</Color>
+  <Style TargetType="ContentPage"><Setter Property="BackgroundColor" Value="{StaticResource Canvas}"/><Setter Property="Shell.BackgroundColor" Value="{StaticResource Navy}"/><Setter Property="Shell.ForegroundColor" Value="{StaticResource Ink}"/><Setter Property="Shell.TitleColor" Value="{StaticResource Ink}"/></Style>
+  <Style TargetType="Label"><Setter Property="TextColor" Value="{StaticResource Ink}"/><Setter Property="FontSize" Value="14"/></Style>
+  <Style TargetType="Button"><Setter Property="BackgroundColor" Value="{StaticResource Orange}"/><Setter Property="TextColor" Value="#101722"/><Setter Property="CornerRadius" Value="10"/><Setter Property="Padding" Value="16,13"/><Setter Property="FontAttributes" Value="Bold"/><Setter Property="FontSize" Value="14"/><Setter Property="Margin" Value="0,4,0,2"/></Style>
+  <Style TargetType="Entry"><Setter Property="BackgroundColor" Value="{StaticResource PanelRaised}"/><Setter Property="TextColor" Value="{StaticResource Ink}"/><Setter Property="PlaceholderColor" Value="#8091A5"/><Setter Property="HeightRequest" Value="48"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+  <Style TargetType="Editor"><Setter Property="BackgroundColor" Value="{StaticResource PanelRaised}"/><Setter Property="TextColor" Value="{StaticResource Ink}"/><Setter Property="PlaceholderColor" Value="#8091A5"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+  <Style TargetType="Picker"><Setter Property="BackgroundColor" Value="{StaticResource PanelRaised}"/><Setter Property="TextColor" Value="{StaticResource Ink}"/><Setter Property="TitleColor" Value="{StaticResource Muted}"/><Setter Property="Margin" Value="0,3,0,8"/></Style>
+  <Style TargetType="SearchBar"><Setter Property="BackgroundColor" Value="{StaticResource PanelRaised}"/><Setter Property="TextColor" Value="{StaticResource Ink}"/><Setter Property="PlaceholderColor" Value="{StaticResource Muted}"/></Style>
+  <Style TargetType="Border"><Setter Property="BackgroundColor" Value="{StaticResource Panel}"/><Setter Property="Stroke" Value="{StaticResource Line}"/><Setter Property="StrokeThickness" Value="1"/><Setter Property="Padding" Value="15"/><Setter Property="StrokeShape"><Setter.Value><RoundRectangle CornerRadius="14"/></Setter.Value></Setter></Style>
+ </ResourceDictionary></Application.Resources>
+</Application>

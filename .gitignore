@@ -1,0 +1,11 @@
+bin/
+obj/
+.vs/
+.vscode/
+*.user
+*.suo
+*.keystore
+*.p12
+*.mobileprovision
+.env
+appsettings.*.json

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="MaintenancePRO.Views.PageHeader">
+ <VerticalStackLayout Spacing="5" Margin="0,2,0,14"><Label x:Name="TitleLabel" FontSize="25" FontAttributes="Bold" TextColor="#F2F5F9"/><Label x:Name="SubtitleLabel" FontSize="13" TextColor="#9AAABD"/></VerticalStackLayout>
+</ContentView>

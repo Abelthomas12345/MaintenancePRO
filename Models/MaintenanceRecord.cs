@@ -1,0 +1,1 @@
+namespace MaintenancePRO.Models; public sealed class MaintenanceRecord { public string Title {get;set;}=""; public string Equipment {get;set;}=""; public string Date {get;set;}=""; public string Status {get;set;}=""; public string Technician {get;set;}=""; }
