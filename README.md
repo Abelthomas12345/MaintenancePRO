@@ -1,68 +1,125 @@
-# MaintenancePro 🛠️ (Version Windows - .NET MAUI)
+# MaintenancePro 🛠️ (Version multiplateforme : Android + Windows — .NET MAUI)
 
-**Examen Pratique - Atelier de Développement Mobile**  
-*Niveau 5 Génie Logiciel | Année Académique 2026/2027*  
-**Étudiant :** NDOUNGUE ESSOH ABEL THOMAS  
-**Enseignant :** M. Dada Nelson  
-
----
-
-## 📌 Présentation du Projet
-
-Dans le secteur industriel, la gestion traditionnelle des pannes et des interventions s'effectue fréquemment sur papier, entraînant des pertes d'informations et l'absence d'un historique exploitable. 
-
-**MaintenancePro** est une solution logicielle moderne conçue pour numériser le processus de maintenance. Cette version spécifique cible l'environnement **Windows** grâce au framework **.NET MAUI**, offrant une interface ergonomique inspirée des maquettes Figma pour les techniciens et gestionnaires d'atelier.
+**Examen pratique — Atelier de Développement Mobile**
+*Niveau 5 Génie Logiciel | Année académique 2026/2027*
+**Étudiant :** NDOUNGUE ESSOH ABEL THOMAS
+**Enseignant :** M. Dada Nelson
 
 ---
 
-## 🏬 Domaine & Problématique
+## 📌 Présentation
 
-* **Domaine :** Industrie & Maintenance
-* **Problème traité :** Consignation manuelle sur papier des pannes et des interventions, rendant l'historique inutilisable et difficile d'accès.
-* **Objectif principal :** Enregistrer les interventions de maintenance, centraliser le suivi et constituer un historique fiable par équipement sous une interface de bureau intuitive.
+Dans le secteur industriel, les pannes et les interventions sont souvent consignées sur papier, ce qui provoque des pertes d'informations et empêche de disposer d'un historique exploitable.
 
----
+**MaintenancePro** numérise ce processus. Cette version regroupe en **un seul projet .NET MAUI** :
 
-## 🏗️ Architecture Technique (.NET MAUI)
+- une **application Android** (émulateur ou téléphone) ;
+- une **application Windows** (exécutable de bureau).
 
-Le projet suit scrupuleusement le design pattern **MVVM (Model-View-ViewModel)** et s'articule autour de la structure de répertoires suivante :
-
-* **`Models/`** : Contient les entités métier (ex: `Equipment.cs`, `MaintenanceRecord.cs`).
-* **`Views/`** : Interfaces utilisateur en XAML (Pages de connexion, Tableau de bord, Fiches équipements, Diagnostics, Interventions, Historique, Rapports, Paramètres).
-* **`ViewModels/`** : Logique de présentation et liaison des données (ex: `DashboardViewModel.cs`, `EquipmentViewModel.cs`, `DiagnosisViewModel.cs`, etc.).
-* **`Services/`** : Services de gestion des données (ex: `DemoDataService.cs`).
-* **`Platforms/Windows/`** : Spécificités de configuration et point d'entrée pour l'exécution sur le système d'exploitation Windows.
+Les deux plateformes partagent le même code (vues, ViewModels, modèles, services) et la même interface, inspirée des maquettes Figma : fond bleu nuit, panneaux ardoise, accent orange.
 
 ---
 
-## ✨ Fonctionnalités Clés
+## 🏬 Domaine et problématique
 
-1. **Tableau de Bord (`Dashboard`)** : Vue d'ensemble des équipements actifs, des pannes en cours et des interventions récentes.
-2. **Fiche Équipement (`Equipment`)** : Consultation et gestion détaillée des caractéristiques des machines.
-3. **Déclaration de Panne (`Breakdown`)** : Signalement rapide d'un dysfonctionnement industriel.
-4. **Diagnostic (`Diagnosis`)** : Évaluation technique et identification de la cause racine.
-5. **Gestion des Interventions (`Intervention`)** : Suivi des actions correctives, ajout de photos et détails des réparations.
-6. **Historique par Machine (`History`)** : Traçabilité complète des interventions passées pour chaque équipement.
-7. **Gestion des Techniciens & Rapports** : Suivi des intervenants et génération de bilans d'activité.
+- **Domaine :** Industrie et maintenance
+- **Problème :** consignation manuelle des pannes et interventions, historique inutilisable
+- **Objectif :** enregistrer les interventions, centraliser le suivi et constituer un historique par équipement, sur mobile comme sur poste fixe
 
 ---
 
-## 🚀 Prérequis et Installation (Environnement Windows)
+## 🏗️ Architecture (MVVM)
 
-### Prérequis logiciels
-* **Système d'exploitation :** Windows 10 / 11 (64-bit)
-* **IDE :** Visual Studio 2022 (version recommandée) ou Visual Studio Code avec les extensions .NET.
-* **Charges de travail Visual Studio requises :**
-  * Développement d'applications mobiles avec .NET (.NET MAUI)
-  * Développement desktop .NET (si requis)
-* **SDK .NET :** .NET 8.0 ou supérieur.
+```
+MaintenancePRO/
+├── Models/        Entités métier (Equipment, MaintenanceRecord)
+├── Views/         Pages XAML (connexion, accueil, équipements, panne, diagnostic,
+│                  intervention, historique, rapports, techniciens, paramètres)
+├── ViewModels/    Logique de présentation et commandes
+├── Services/      DemoDataService (données de démonstration)
+├── Resources/     Icône et écran de démarrage
+├── Platforms/
+│   ├── Android/   MainActivity, MainApplication, AndroidManifest.xml
+│   └── Windows/   Point d'entrée WinUI (App.xaml, manifestes)
+├── AppShell.xaml  Navigation (Shell + menu latéral)
+└── MaintenancePRO.csproj
+```
 
-### Étapes d'installation et d'exécution
+Le dossier `Platforms/Windows` ne doit pas être supprimé (erreur `CS5001` sinon).
 
-1. **Ouvrir le projet :**
-   Lancez Visual Studio 2022 et sélectionnez *Ouvrir un projet ou une solution*, puis choisissez le fichier de projet `MaintenancePRO.csproj`.
+---
 
-2. **Restaurer les packages NuGet :**
-   Les dépendances du projet se restaureront automatiquement à l'ouverture. Si nécessaire, exécutez dans le terminal :
-   ```bash
-   dotnet restore
+## ✨ Fonctionnalités
+
+1. **Connexion** (mode démonstration)
+2. **Accueil / tableau de bord** : équipements suivis, dossiers actifs, dernières interventions
+3. **Équipements** et **fiche équipement**
+4. **Déclaration de panne**
+5. **Diagnostic**
+6. **Intervention** et **détail d'intervention**
+7. **Historique par machine**
+8. **Rapports**, **techniciens**, **paramètres**
+
+---
+
+## 🚀 Prérequis
+
+| | Windows | Android |
+|---|---|---|
+| Système | Windows 10 (1809) ou 11, 64 bits | Android 7.0 (API 24) minimum |
+| Outils | Visual Studio compatible .NET 10 | Visual Studio + Android SDK |
+| Appareil | « Windows Machine » | Émulateur (Device Manager) ou téléphone en débogage USB |
+
+- **SDK :** .NET 10
+- **Workload Visual Studio :** « Développement d'interface utilisateur d'applications .NET multiplateformes » (.NET MAUI), avec les composants Android et Windows
+
+---
+
+## ▶️ Installation et exécution
+
+1. Cloner ou décompresser le projet.
+2. Ouvrir `MaintenancePRO.csproj` dans Visual Studio. Les packages NuGet se restaurent automatiquement (ou `dotnet restore`).
+3. Choisir la cible dans la barre d'outils :
+   - **Windows Machine** → l'application s'ouvre dans une fenêtre ;
+   - **un émulateur Android** ou **un téléphone connecté** → l'application s'installe sur l'appareil.
+4. Lancer avec **F5**.
+
+### En ligne de commande
+
+```bash
+dotnet build -f net10.0-android
+dotnet build -f net10.0-windows10.0.19041.0
+```
+
+Les cibles de compilation sont `net10.0-android` (toujours) et `net10.0-windows10.0.19041.0` (ajoutée automatiquement sous Windows).
+
+---
+
+## 📦 Dépendances
+
+- **Windows :** `Microsoft.Maui.Controls` 10.0.20 et `Microsoft.Extensions.Logging.Debug` 10.0.0
+- **Android :** aucun package NuGet, uniquement le workload MAUI
+
+---
+
+## ⚠️ Limites actuelles
+
+Prototype front-end :
+
+- données de démonstration locales, sans API ni base de données ;
+- authentification simulée ;
+- l'ajout de photos et les rapports calculés ne sont pas encore implémentés ;
+- les formulaires valident localement et n'enregistrent rien sur un serveur.
+
+Évolution prévue : remplacer `DemoDataService` par des appels à une API et ajouter la persistance.
+
+---
+
+## 🔧 Dépannage
+
+| Problème | Piste |
+|---|---|
+| `NU1301` / `NU1900` | Vérifier l'accès à NuGet ou au cache local (`NU1900` n'est pas forcément bloquant) |
+| `MA002` | Vérifier la restauration de `Microsoft.Maui.Controls` (cible Windows) |
+| `CS5001` | Le dossier `Platforms/Windows` est manquant |
+| Aucun émulateur listé | Le créer et le démarrer dans Device Manager, ou activer le débogage USB |
