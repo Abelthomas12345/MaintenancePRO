@@ -1,1 +1,12 @@
-{"profiles":{"MaintenancePRO.Api":{"commandName":"Project","launchBrowser":false,"applicationUrl":"http://0.0.0.0:5080","environmentVariables":{"ASPNETCORE_ENVIRONMENT":"Development"}}}}
+{
+  "profiles": {
+    "MaintenancePRO.Api": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:63617;http://localhost:63618"
+    }
+  }
+}
