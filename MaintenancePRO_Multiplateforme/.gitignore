@@ -1,0 +1,40 @@
+# Build output and test results
+[Bb]in/
+[Oo]bj/
+artifacts/
+TestResults/
+
+# IDE settings
+.vs/
+.vscode/
+.idea/
+*.sln.iml
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+# NuGet packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+# Secrets and signing credentials
+.env
+.env.*
+*.keystore
+*.p12
+*.mobileprovision
+appsettings.*.json
+secrets.json
+
+# Logs and local data
+*.log
+App_Data/
+*.db
+*.db-shm
+*.db-wal
+
+# Operating system files
+.DS_Store
+Thumbs.db

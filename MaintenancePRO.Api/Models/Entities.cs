@@ -1,0 +1,10 @@
+using System.ComponentModel.DataAnnotations; using Microsoft.AspNetCore.Identity;
+namespace MaintenancePRO.Api.Models;
+public sealed class ApplicationUser:IdentityUser { [StringLength(100)] public string DisplayName {get;set;}=""; public AccountStatus Status {get;set;}=AccountStatus.Pending; public DateTime CreatedUtc {get;set;}=DateTime.UtcNow; }
+public enum AccountStatus { Pending, Active, Suspended, Disabled }
+public static class AppRoles { public const string Admin="Admin", Supervisor="Supervisor", Technician="Technician", User="User"; }
+public sealed class Equipment { public int Id {get;set;} [Required,StringLength(40)] public string Code {get;set;}=""; [Required,StringLength(160)] public string Name {get;set;}=""; [Required,StringLength(160)] public string Location {get;set;}=""; [Required,StringLength(80)] public string Category {get;set;}="Machine"; public EquipmentStatus Status {get;set;}=EquipmentStatus.Available; }
+public enum EquipmentStatus { Available, InService, ToInspect, Broken, Retired }
+public sealed class MaintenanceIntervention { public int Id {get;set;} [Required,StringLength(160)] public string Title {get;set;}=""; [Required,StringLength(2000)] public string Description {get;set;}=""; [Required,StringLength(40)] public string EquipmentCode {get;set;}=""; public string CreatedByUserId {get;set;}=""; public string? AssignedTechnicianId {get;set;} public InterventionStatus Status {get;set;}=InterventionStatus.Submitted; [StringLength(2000)] public string? Resolution {get;set;} public DateTime CreatedUtc {get;set;}=DateTime.UtcNow; public DateTime? CompletedUtc {get;set;} }
+public enum InterventionStatus { Submitted, Approved, Assigned, InProgress, Completed, Rejected, Cancelled, Closed }
+public sealed class AuditEvent { public long Id {get;set;} public string? ActorUserId {get;set;} [Required,StringLength(100)] public string Action {get;set;}=""; [StringLength(100)] public string EntityType {get;set;}=""; public string? EntityId {get;set;} [StringLength(64)] public string? IpAddress {get;set;} public DateTime CreatedUtc {get;set;}=DateTime.UtcNow; }

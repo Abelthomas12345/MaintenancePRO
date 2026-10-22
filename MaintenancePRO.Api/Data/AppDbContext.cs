@@ -1,0 +1,3 @@
+using MaintenancePRO.Api.Models; using Microsoft.AspNetCore.Identity.EntityFrameworkCore; using Microsoft.EntityFrameworkCore;
+namespace MaintenancePRO.Api.Data;
+public sealed class AppDbContext(DbContextOptions<AppDbContext> options):IdentityDbContext<ApplicationUser>(options) { public DbSet<Equipment> Equipments=>Set<Equipment>(); public DbSet<MaintenanceIntervention> Interventions=>Set<MaintenanceIntervention>(); public DbSet<AuditEvent> AuditEvents=>Set<AuditEvent>(); protected override void OnModelCreating(ModelBuilder b){base.OnModelCreating(b); b.Entity<Equipment>().HasIndex(x=>x.Code).IsUnique(); b.Entity<MaintenanceIntervention>().HasIndex(x=>new{x.Status,x.CreatedUtc}); b.Entity<AuditEvent>().HasIndex(x=>x.CreatedUtc);} }
