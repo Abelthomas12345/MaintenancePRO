@@ -1,1 +1,8 @@
-namespace MaintenancePRO.Views; public partial class BreakdownPage:ContentPage { public BreakdownPage():this(new ViewModels.BreakdownViewModel()){} public BreakdownPage(ViewModels.BreakdownViewModel vm){InitializeComponent();BindingContext=vm;} }
+using MaintenancePRO.ViewModels;
+namespace MaintenancePRO.Views;
+public partial class BreakdownPage : ContentPage
+{
+    private readonly BreakdownViewModel _vm;
+    public BreakdownPage(BreakdownViewModel vm) { InitializeComponent(); BindingContext = _vm = vm; }
+    protected override async void OnAppearing() { base.OnAppearing(); await _vm.LoadAsync(); }
+}

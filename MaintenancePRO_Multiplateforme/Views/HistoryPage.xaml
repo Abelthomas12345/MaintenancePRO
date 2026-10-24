@@ -1,4 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.HistoryPage" Title="Historique par machine">
- <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13"><local:PageHeader Heading="Historique" Subtitle="Les interventions enregistrées par machine"/><Border Padding="12"><VerticalStackLayout Spacing="7"><Label Text="FILTRER LES DOSSIERS" TextColor="#FF8A00" FontSize="10" FontAttributes="Bold"/><Picker Title="Tous les états" ItemsSource="{Binding Filters}" SelectedItem="{Binding Filter}"/></VerticalStackLayout></Border><CollectionView ItemsSource="{Binding FilteredRecords}" SelectionMode="None"><CollectionView.ItemTemplate><DataTemplate><Border Margin="0,5"><VerticalStackLayout Spacing="7"><Grid ColumnDefinitions="*,Auto"><Label Text="{Binding Title}" FontSize="15" FontAttributes="Bold"/><Label Grid.Column="1" Text="{Binding Status}" TextColor="#23C6A5" FontSize="11" VerticalOptions="Center"/></Grid><Label Text="{Binding Equipment}" TextColor="#9AAABD"/><Grid ColumnDefinitions="*,Auto"><Label Text="{Binding Date}" FontSize="11" TextColor="#9AAABD"/><Label Grid.Column="1" Text="Technicien : {Binding Technician}" FontSize="11" TextColor="#9AAABD"/></Grid></VerticalStackLayout></Border></DataTemplate></CollectionView.ItemTemplate></CollectionView></VerticalStackLayout></ScrollView>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.HistoryPage" Title="Historique">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Historique" Subtitle="Déclarations et interventions enregistrées"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Border Padding="12"><VerticalStackLayout Spacing="7">
+   <Label Text="FILTRER LES DOSSIERS" Style="{StaticResource Section}"/>
+   <Picker Title="Tous les états" ItemsSource="{Binding Filters}" SelectedItem="{Binding Filter}"/>
+   <Grid ColumnDefinitions="*,Auto" IsVisible="{Binding HasEquipmentFilter}"><Label Text="{Binding EquipmentFilterText}" VerticalOptions="Center" TextColor="#23C6A5"/><Button Grid.Column="1" Text="Effacer" Style="{StaticResource SmallButton}" Command="{Binding ClearEquipmentCommand}"/></Grid>
+  </VerticalStackLayout></Border>
+
+  <Label Text="DÉCLARATIONS DE PANNE" Style="{StaticResource Section}"/>
+  <Label Text="Aucune déclaration." Style="{StaticResource Hint}" IsVisible="{Binding NoBreakdowns}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding Breakdowns}" Spacing="10">
+   <BindableLayout.ItemTemplate><DataTemplate><Border><VerticalStackLayout Spacing="6">
+    <Grid ColumnDefinitions="*,Auto"><Label Text="{Binding Dto.Title}" FontSize="15" FontAttributes="Bold"/><Label Grid.Column="1" Text="{Binding Dto.StatusLabel}" TextColor="{Binding Dto.StatusColor}" FontSize="11" VerticalOptions="Center"/></Grid>
+    <Label Text="{Binding Dto.Meta}" Style="{StaticResource Hint}"/>
+    <Label Text="{Binding Dto.TechnicianText}" Style="{StaticResource Hint}" FontSize="11"/>
+    <HorizontalStackLayout Spacing="6">
+     <Button Text="Diagnostic →" Style="{StaticResource SmallButton}" IsVisible="{Binding ShowDiagnose}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DiagnoseCommand}" CommandParameter="{Binding .}"/>
+     <Button Text="Intervention →" Style="{StaticResource SmallButton}" IsVisible="{Binding ShowIntervene}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.InterveneCommand}" CommandParameter="{Binding .}"/>
+     <Button Text="Clôturer" Style="{StaticResource SmallButton}" IsVisible="{Binding ShowClose}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.CloseCommand}" CommandParameter="{Binding .}"/>
+    </HorizontalStackLayout>
+   </VerticalStackLayout></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+
+  <Label Text="INTERVENTIONS" Style="{StaticResource Section}" Margin="0,10,0,0"/>
+  <Label Text="Aucune intervention." Style="{StaticResource Hint}" IsVisible="{Binding NoInterventions}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding Interventions}" Spacing="10">
+   <BindableLayout.ItemTemplate><DataTemplate><Border><VerticalStackLayout Spacing="6">
+    <Grid ColumnDefinitions="*,Auto"><Label Text="{Binding Title}" FontSize="15" FontAttributes="Bold"/><Label Grid.Column="1" Text="{Binding StatusLabel}" TextColor="{Binding StatusColor}" FontSize="11" VerticalOptions="Center"/></Grid>
+    <Label Text="{Binding Meta}" Style="{StaticResource Hint}"/>
+    <Button Text="Détail →" Style="{StaticResource SmallButton}" HorizontalOptions="Start" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenInterventionCommand}" CommandParameter="{Binding .}"/>
+   </VerticalStackLayout></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+ </VerticalStackLayout></ScrollView>
 </ContentPage>

@@ -1,4 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.InterventionPage" Title="Intervention">
- <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13"><local:PageHeader Heading="Intervention" Subtitle="Consigner le travail réalisé sur la machine"/><Border><VerticalStackLayout Spacing="5"><Label Text="COMPTE RENDU" FontSize="10" TextColor="#FF8A00" FontAttributes="Bold"/><Label Text="Code équipement"/><Entry Placeholder="Ex. EQ-001" Text="{Binding EquipmentCode}" MaxLength="40"/><Label Text="Durée (minutes) *"/><Entry Placeholder="Ex. 45" Keyboard="Numeric" Text="{Binding DurationMinutes}" MaxLength="6"/><Label Text="Résultat de l’intervention *"/><Editor Placeholder="Travaux réalisés, pièces utilisées, résultat…" Text="{Binding Result}" HeightRequest="135" MaxLength="1000"/><Label Text="Vérifie le résultat avant de clôturer." FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border><Button Text="Clôturer l’intervention  ✓" Command="{Binding CloseCommand}"/></VerticalStackLayout></ScrollView>
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Intervention" Subtitle="Consigner le travail réalisé sur la machine"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Border><VerticalStackLayout Spacing="6">
+   <Label Text="PANNE EN MAINTENANCE" Style="{StaticResource Section}"/>
+   <Label Text="Aucune panne approuvée en attente d'intervention." Style="{StaticResource Hint}" IsVisible="{Binding NoBreakdowns}"/>
+   <Picker Title="Choisir une panne" ItemsSource="{Binding Breakdowns}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedBreakdown}"/>
+   <Label Text="{Binding BreakdownInfo}" IsVisible="{Binding HasBreakdown}"/>
+  </VerticalStackLayout></Border>
+
+  <Label Text="INTERVENTIONS DE CETTE PANNE" Style="{StaticResource Section}" IsVisible="{Binding HasBreakdown}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding Interventions}" Spacing="8">
+   <BindableLayout.ItemTemplate><DataTemplate><Border Padding="12"><Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+    <VerticalStackLayout Spacing="3"><Label Text="{Binding Title}" FontAttributes="Bold"/><Label Text="{Binding StatusLabel}" TextColor="{Binding StatusColor}" FontSize="11"/></VerticalStackLayout>
+    <Button Grid.Column="1" Text="Sélectionner" Style="{StaticResource SmallButton}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectCommand}" CommandParameter="{Binding .}"/>
+   </Grid></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+
+  <Border IsVisible="{Binding CanCreate}"><VerticalStackLayout Spacing="5">
+   <Label Text="NOUVELLE INTERVENTION" Style="{StaticResource Section}"/>
+   <Label Text="Titre *"/><Entry Placeholder="Ex. Remplacement du roulement" Text="{Binding NewTitle}" MaxLength="160"/>
+   <Label Text="Travaux prévus *"/><Editor Text="{Binding NewWork}" HeightRequest="90" MaxLength="3000"/>
+   <Label Text="Technicien" IsVisible="{Binding IsManager}"/>
+   <Picker Title="Technicien (par défaut : celui de la panne)" ItemsSource="{Binding Technicians}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding NewTechnician}" IsVisible="{Binding IsManager}"/>
+   <Button Text="Créer l'intervention" Style="{StaticResource SecondaryButton}" Command="{Binding CreateCommand}" IsEnabled="{Binding IsNotBusy}"/>
+  </VerticalStackLayout></Border>
+
+  <Border IsVisible="{Binding HasIntervention}"><VerticalStackLayout Spacing="6">
+   <Label Text="COMPTE RENDU" Style="{StaticResource Section}"/>
+   <Label Text="{Binding InterventionInfo}"/>
+   <Label Text="Résultat de l’intervention *"/>
+   <Editor Placeholder="Travaux réalisés, pièces utilisées, résultat…" Text="{Binding Resolution}" HeightRequest="125" MaxLength="3000" IsEnabled="{Binding IsEditable}"/>
+   <Label Text="Durée (minutes) — manager" IsVisible="{Binding ShowManagerFields}"/><Entry Keyboard="Numeric" Text="{Binding Minutes}" MaxLength="8" IsVisible="{Binding ShowManagerFields}"/>
+   <Label Text="Coût — manager" IsVisible="{Binding ShowManagerFields}"/><Entry Keyboard="Numeric" Text="{Binding CostText}" MaxLength="12" IsVisible="{Binding ShowManagerFields}"/>
+   <Button Text="Enregistrer" Style="{StaticResource SecondaryButton}" Command="{Binding SaveDetailsCommand}" IsEnabled="{Binding IsNotBusy}"/>
+   <Button Text="▶ Démarrer" Command="{Binding StartCommand}" IsVisible="{Binding CanStart}"/>
+   <Button Text="⏸ Mettre en pause" Style="{StaticResource SecondaryButton}" Command="{Binding PauseCommand}" IsVisible="{Binding CanPause}"/>
+   <Button Text="▶ Reprendre" Command="{Binding ResumeCommand}" IsVisible="{Binding CanResume}"/>
+   <Button Text="Clôturer l’intervention  ✓" Command="{Binding CompleteCommand}" IsVisible="{Binding CanComplete}"/>
+   <Button Text="Annuler l'intervention" Style="{StaticResource DangerButton}" Command="{Binding CancelCommand}" IsVisible="{Binding CanCancel}"/>
+   <Label Text="Attribuer à un autre technicien" IsVisible="{Binding ShowAssign}"/>
+   <Picker Title="Technicien" ItemsSource="{Binding Technicians}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding SelectedTechnician}" IsVisible="{Binding ShowAssign}"/>
+   <Button Text="Attribuer" Style="{StaticResource SecondaryButton}" Command="{Binding AssignCommand}" IsVisible="{Binding ShowAssign}"/>
+   <Button Text="Voir le détail et les photos  →" Style="{StaticResource SecondaryButton}" Command="{Binding OpenDetailCommand}"/>
+  </VerticalStackLayout></Border>
+ </VerticalStackLayout></ScrollView>
 </ContentPage>

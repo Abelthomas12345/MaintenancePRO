@@ -1,1 +1,8 @@
-namespace MaintenancePRO.Views; public partial class LoginPage:ContentPage { public LoginPage(ViewModels.LoginViewModel vm){InitializeComponent();BindingContext=vm;} }
+using MaintenancePRO.ViewModels;
+namespace MaintenancePRO.Views;
+public partial class LoginPage : ContentPage
+{
+    private readonly LoginViewModel _vm;
+    public LoginPage(LoginViewModel vm) { InitializeComponent(); BindingContext = _vm = vm; }
+    protected override async void OnAppearing() { base.OnAppearing(); await _vm.TryRestoreAsync(); }
+}

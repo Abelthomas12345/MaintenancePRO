@@ -1,4 +1,45 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.DiagnosisPage" Title="Diagnostic">
- <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13"><local:PageHeader Heading="Diagnostic" Subtitle="Identifier la cause et définir les actions"/><Border><VerticalStackLayout Spacing="5"><Label Text="DOSSIER DE PANNE" FontSize="10" TextColor="#FF8A00" FontAttributes="Bold"/><Label Text="Référence de panne"/><Entry Placeholder="Ex. PAN-001" Text="{Binding BreakdownCode}" MaxLength="40"/><Label Text="Cause identifiée *"/><Editor Placeholder="Cause probable ou confirmée…" Text="{Binding Cause}" HeightRequest="95" MaxLength="500"/><Label Text="Actions recommandées"/><Editor Placeholder="Contrôles, pièces et actions à mener…" Text="{Binding Actions}" HeightRequest="115" MaxLength="1000"/></VerticalStackLayout></Border><Button Text="Valider le diagnostic  →" Command="{Binding SaveCommand}"/></VerticalStackLayout></ScrollView>
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Diagnostic" Subtitle="Identifier la cause et définir les actions"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Border><VerticalStackLayout Spacing="6">
+   <Label Text="DOSSIER DE PANNE" Style="{StaticResource Section}"/>
+   <Label Text="Aucune panne à diagnostiquer pour le moment." Style="{StaticResource Hint}" IsVisible="{Binding NoBreakdowns}"/>
+   <Picker Title="Choisir une panne" ItemsSource="{Binding Breakdowns}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedBreakdown}"/>
+   <Label Text="{Binding Summary}" IsVisible="{Binding HasSelection}"/>
+  </VerticalStackLayout></Border>
+
+  <Border IsVisible="{Binding CanAssign}"><VerticalStackLayout Spacing="6">
+   <Label Text="ATTRIBUTION (SUPERVISEUR)" Style="{StaticResource Section}"/>
+   <Picker Title="Choisir un technicien" ItemsSource="{Binding Technicians}" ItemDisplayBinding="{Binding DisplayName}" SelectedItem="{Binding SelectedTechnician}"/>
+   <Button Text="Attribuer la panne" Style="{StaticResource SecondaryButton}" Command="{Binding AssignCommand}" IsEnabled="{Binding IsNotBusy}"/>
+  </VerticalStackLayout></Border>
+
+  <Border IsVisible="{Binding CanWrite}"><VerticalStackLayout Spacing="5">
+   <Label Text="MON DIAGNOSTIC" Style="{StaticResource Section}"/>
+   <Label Text="Constats *"/><Editor Placeholder="Ce qui a été observé, mesuré…" Text="{Binding Findings}" HeightRequest="95" MaxLength="3000"/>
+   <Label Text="Cause identifiée"/><Editor Placeholder="Cause probable ou confirmée…" Text="{Binding RootCause}" HeightRequest="80" MaxLength="3000"/>
+   <Label Text="Actions recommandées"/><Editor Placeholder="Contrôles, pièces et actions à mener…" Text="{Binding RecommendedAction}" HeightRequest="100" MaxLength="3000"/>
+   <Button Text="Enregistrer le brouillon" Style="{StaticResource SecondaryButton}" Command="{Binding SaveDraftCommand}" IsEnabled="{Binding IsNotBusy}"/>
+   <Button Text="Soumettre pour approbation  →" Command="{Binding SubmitCommand}" IsEnabled="{Binding IsNotBusy}"/>
+  </VerticalStackLayout></Border>
+  <Label Text="Diagnostic soumis : en attente d'approbation du superviseur." TextColor="#FF8A00" IsVisible="{Binding WaitingApproval}"/>
+  <Button Text="Aller à l'intervention  →" Command="{Binding GoInterventionCommand}" IsVisible="{Binding CanGoIntervention}"/>
+
+  <Label Text="DIAGNOSTICS DE CETTE PANNE" Style="{StaticResource Section}" IsVisible="{Binding HasSelection}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding Diagnoses}" Spacing="10">
+   <BindableLayout.ItemTemplate><DataTemplate><Border><VerticalStackLayout Spacing="6">
+    <Grid ColumnDefinitions="*,Auto"><Label Text="{Binding Dto.Meta}" Style="{StaticResource Hint}"/><Label Grid.Column="1" Text="{Binding Dto.StatusLabel}" TextColor="#FF8A00" FontSize="11" FontAttributes="Bold"/></Grid>
+    <Label Text="{Binding Dto.Findings}"/>
+    <Label Text="{Binding Dto.RootCause, StringFormat='Cause : {0}'}" Style="{StaticResource Hint}"/>
+    <Label Text="{Binding Dto.RecommendedAction, StringFormat='Actions : {0}'}" Style="{StaticResource Hint}"/>
+    <HorizontalStackLayout Spacing="6" IsVisible="{Binding ShowDecision}">
+     <Button Text="Approuver" Style="{StaticResource SmallButton}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ApproveCommand}" CommandParameter="{Binding .}"/>
+     <Button Text="Rejeter" Style="{StaticResource SmallButton}" BackgroundColor="#FF626D" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RejectCommand}" CommandParameter="{Binding .}"/>
+    </HorizontalStackLayout>
+   </VerticalStackLayout></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+  <Button Text="Rejeter la déclaration (non justifiée)" Style="{StaticResource DangerButton}" Command="{Binding RejectBreakdownCommand}" IsVisible="{Binding CanRejectBreakdown}"/>
+ </VerticalStackLayout></ScrollView>
 </ContentPage>

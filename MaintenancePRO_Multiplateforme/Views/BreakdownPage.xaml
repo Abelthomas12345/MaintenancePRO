@@ -1,4 +1,19 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.BreakdownPage" Title="Déclarer une panne">
- <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13"><local:PageHeader Heading="Déclarer une panne" Subtitle="Renseigne les symptômes observés"/><Border><VerticalStackLayout Spacing="5"><Label Text="NOUVELLE DÉCLARATION" TextColor="#FF8A00" FontSize="10" FontAttributes="Bold"/><Label Text="Équipement concerné *"/><Entry Placeholder="Ex. EQ-001" Text="{Binding EquipmentCode}" MaxLength="40"/><Label Text="Niveau de sévérité *"/><Picker Title="Choisir la sévérité" SelectedItem="{Binding Severity}"><Picker.Items><x:String>Faible</x:String><x:String>Moyenne</x:String><x:String>Élevée</x:String><x:String>Critique</x:String></Picker.Items></Picker><Label Text="Description du problème *"/><Editor Placeholder="Décris les symptômes, le contexte et les risques…" Text="{Binding Description}" HeightRequest="125" MaxLength="1000"/><Label Text="Les champs marqués * sont obligatoires." FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border><Button Text="Envoyer la déclaration  →" Command="{Binding SaveCommand}"/><Label Text="Mode prototype · données conservées localement" FontSize="11" TextColor="#71849A" HorizontalTextAlignment="Center"/></VerticalStackLayout></ScrollView>
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Déclarer une panne" Subtitle="Renseigne les symptômes observés"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Border><VerticalStackLayout Spacing="5">
+   <Label Text="NOUVELLE DÉCLARATION" Style="{StaticResource Section}"/>
+   <Label Text="Équipement concerné *"/>
+   <Picker Title="Choisir dans la liste des équipements" ItemsSource="{Binding Equipments}" ItemDisplayBinding="{Binding Display}" SelectedItem="{Binding SelectedEquipment}"/>
+   <Label Text="Niveau de sévérité *"/>
+   <Picker Title="Choisir la sévérité" ItemsSource="{Binding SeverityOptions}" ItemDisplayBinding="{Binding Label}" SelectedItem="{Binding SelectedSeverity}"/>
+   <Label Text="Titre de la panne *"/><Entry Placeholder="Ex. Vibration anormale" Text="{Binding Title}" MaxLength="160"/>
+   <Label Text="Description du problème *"/>
+   <Editor Placeholder="Décris les symptômes, le contexte et les risques…" Text="{Binding Description}" HeightRequest="125" MaxLength="3000"/>
+   <Label Text="Les champs marqués * sont obligatoires. Seuls les équipements enregistrés sont proposés." Style="{StaticResource Hint}" FontSize="11"/>
+  </VerticalStackLayout></Border>
+  <Button Text="Envoyer la déclaration  →" Command="{Binding SaveCommand}" IsEnabled="{Binding IsNotBusy}"/>
+ </VerticalStackLayout></ScrollView>
 </ContentPage>

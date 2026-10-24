@@ -1,4 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.TechniciansPage" Title="Techniciens">
- <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13"><local:PageHeader Heading="Techniciens" Subtitle="Les membres de l’équipe maintenance"/><Label Text="ÉQUIPE" TextColor="#FF8A00" FontSize="10" FontAttributes="Bold"/><CollectionView ItemsSource="{Binding Technicians}" SelectionMode="None"><CollectionView.ItemTemplate><DataTemplate><Border Margin="0,5"><Grid ColumnDefinitions="Auto,*" ColumnSpacing="12"><Border BackgroundColor="#20364A" WidthRequest="45" HeightRequest="45" Padding="0" StrokeThickness="0"><Label Text="👤" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20"/></Border><VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4"><Label Text="{Binding .}" FontAttributes="Bold"/><Label Text="Équipe de maintenance" FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Grid></Border></DataTemplate></CollectionView.ItemTemplate></CollectionView><Label Text="Les comptes, rôles et permissions seront gérés par le backend." FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></ScrollView>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.TechniciansPage" Title="Techniciens et comptes">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Techniciens et comptes" Subtitle="Liste complète, réservée à l’administrateur"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Label Text="Cet écran est réservé à l'administrateur." TextColor="#FF626D" IsVisible="{Binding NotAdmin}"/>
+  <VerticalStackLayout Spacing="10" IsVisible="{Binding IsAdmin}">
+   <Label Text="{Binding Counts}" Style="{StaticResource Hint}"/>
+   <Button Text="＋ Nouveau compte" Style="{StaticResource SecondaryButton}" Command="{Binding ToggleCreateCommand}"/>
+   <Border IsVisible="{Binding IsCreating}"><VerticalStackLayout Spacing="4">
+    <Label Text="CRÉER UN COMPTE (ACTIF IMMÉDIATEMENT)" Style="{StaticResource Section}"/>
+    <Label Text="Nom complet *"/><Entry Text="{Binding NewName}" MaxLength="100"/>
+    <Label Text="E-mail *"/><Entry Keyboard="Email" Text="{Binding NewEmail}" MaxLength="254"/>
+    <Label Text="Mot de passe temporaire *"/><Entry IsPassword="True" Text="{Binding NewPassword}" MaxLength="128"/>
+    <Label Text="Rôle"/><Picker ItemsSource="{Binding NewRoles}" ItemDisplayBinding="{Binding Label}" SelectedItem="{Binding NewRole}"/>
+    <Button Text="Créer le compte" Command="{Binding CreateCommand}" IsEnabled="{Binding IsNotBusy}"/>
+   </VerticalStackLayout></Border>
+   <VerticalStackLayout BindableLayout.ItemsSource="{Binding Users}" Spacing="10">
+    <BindableLayout.ItemTemplate><DataTemplate><Border><VerticalStackLayout Spacing="6">
+     <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="12">
+      <Border BackgroundColor="#20364A" WidthRequest="45" HeightRequest="45" Padding="0" StrokeThickness="0"><Label Text="👤" VerticalOptions="Center" HorizontalOptions="Center" FontSize="20"/></Border>
+      <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="3"><Label Text="{Binding Dto.DisplayName}" FontAttributes="Bold"/><Label Text="{Binding Dto.Email}" FontSize="11" TextColor="#9AAABD"/><Label Text="{Binding RoleLabel}" FontSize="11" TextColor="#FF8A00"/></VerticalStackLayout>
+      <Label Grid.Column="2" Text="{Binding StatusLabel}" TextColor="{Binding StatusColor}" FontSize="11" VerticalOptions="Center"/>
+     </Grid>
+     <HorizontalStackLayout Spacing="6" IsVisible="{Binding CanEdit}">
+      <Button Text="Activer" Style="{StaticResource SmallButton}" IsVisible="{Binding ShowActivate}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.ActivateCommand}" CommandParameter="{Binding .}"/>
+      <Button Text="Suspendre" Style="{StaticResource SmallButton}" BackgroundColor="#FF626D" IsVisible="{Binding ShowSuspend}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SuspendCommand}" CommandParameter="{Binding .}"/>
+      <Button Text="Rôle…" Style="{StaticResource SmallButton}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RoleCommand}" CommandParameter="{Binding .}"/>
+      <Button Text="Mot de passe…" Style="{StaticResource SmallButton}" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PasswordCommand}" CommandParameter="{Binding .}"/>
+     </HorizontalStackLayout>
+    </VerticalStackLayout></Border></DataTemplate></BindableLayout.ItemTemplate>
+   </VerticalStackLayout>
+  </VerticalStackLayout>
+ </VerticalStackLayout></ScrollView>
 </ContentPage>

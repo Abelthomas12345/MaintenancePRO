@@ -1,1 +1,8 @@
-namespace MaintenancePRO.Views; public partial class SettingsPage:ContentPage { public SettingsPage():this(new ViewModels.SettingsViewModel()){} public SettingsPage(ViewModels.SettingsViewModel vm){InitializeComponent();BindingContext=vm;} }
+using MaintenancePRO.ViewModels;
+namespace MaintenancePRO.Views;
+public partial class SettingsPage : ContentPage
+{
+    private readonly SettingsViewModel _vm;
+    public SettingsPage(SettingsViewModel vm) { InitializeComponent(); BindingContext = _vm = vm; }
+    protected override void OnAppearing() { base.OnAppearing(); _vm.OnAppearing(); }
+}
