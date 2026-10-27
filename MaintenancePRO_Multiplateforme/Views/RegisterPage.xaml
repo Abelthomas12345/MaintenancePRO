@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.RegisterPage" Title="Inscription" Shell.FlyoutBehavior="Disabled">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Créer un compte" Subtitle="Ton compte sera activé par un administrateur"/>
+  <Border><VerticalStackLayout Spacing="5">
+   <Label Text="NOUVEAU COMPTE" Style="{StaticResource Section}"/>
+   <Label Text="Nom complet *"/><Entry Placeholder="Ex. Marie Ndiaye" Text="{Binding DisplayName}" MaxLength="100"/>
+   <Label Text="Adresse e-mail *"/><Entry Placeholder="nom@entreprise.com" Keyboard="Email" Text="{Binding Email}" MaxLength="254"/>
+   <Label Text="Mot de passe *"/><Entry IsPassword="True" Text="{Binding Password}" MaxLength="128"/>
+   <Label Text="Confirmer le mot de passe *"/><Entry IsPassword="True" Text="{Binding Confirm}" MaxLength="128"/>
+   <Label Text="12 caractères minimum avec majuscule, minuscule, chiffre et symbole." Style="{StaticResource Hint}"/>
+  </VerticalStackLayout></Border>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Button Text="Créer mon compte  →" Command="{Binding RegisterCommand}" IsEnabled="{Binding IsNotBusy}"/>
+  <Button Text="Retour à la connexion" Style="{StaticResource SecondaryButton}" Command="{Binding BackCommand}"/>
+ </VerticalStackLayout></ScrollView>
+</ContentPage>

@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class InterventionPage:ContentPage { public InterventionPage():this(new ViewModels.InterventionViewModel()){} public InterventionPage(ViewModels.InterventionViewModel vm){InitializeComponent();BindingContext=vm;} }

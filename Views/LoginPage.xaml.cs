@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class LoginPage:ContentPage { public LoginPage():this(new ViewModels.LoginViewModel()){} public LoginPage(ViewModels.LoginViewModel vm){InitializeComponent();BindingContext=vm;} }

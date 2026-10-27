@@ -1,0 +1,35 @@
+## Build output
+bin/
+obj/
+artifacts/
+
+## Visual Studio
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+## JetBrains Rider
+.idea/
+*.sln.iml
+
+## NuGet packages
+*.nupkg
+**/packages/*
+!**/packages/build/
+
+## Logs and local configuration
+*.log
+appsettings.*.local.json
+secrets.json
+
+## Local data
+App_Data/
+*.db
+*.db-shm
+*.db-wal
+
+## Operating system files
+.DS_Store
+Thumbs.db

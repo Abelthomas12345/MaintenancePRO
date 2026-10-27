@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class BreakdownPage:ContentPage { public BreakdownPage():this(new ViewModels.BreakdownViewModel()){} public BreakdownPage(ViewModels.BreakdownViewModel vm){InitializeComponent();BindingContext=vm;} }

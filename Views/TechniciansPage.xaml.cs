@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class TechniciansPage:ContentPage { public TechniciansPage():this(new ViewModels.TechniciansViewModel()){} public TechniciansPage(ViewModels.TechniciansViewModel vm){InitializeComponent();BindingContext=vm;} }

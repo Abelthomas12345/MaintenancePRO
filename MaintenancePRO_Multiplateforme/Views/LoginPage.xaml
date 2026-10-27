@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.LoginPage" Title="Connexion" Shell.FlyoutBehavior="Disabled" Shell.NavBarIsVisible="False">
+ <Grid>
+  <ScrollView><VerticalStackLayout Padding="18,28,18,28" Spacing="13">
+   <local:PageHeader Heading="MaintenancePRO" Subtitle="La maintenance industrielle, maîtrisée."/>
+   <Border Padding="20"><VerticalStackLayout Spacing="8">
+    <Label Text="BON RETOUR" Style="{StaticResource Section}" FontSize="11"/>
+    <Label Text="Connecte-toi à ton espace" FontSize="21" FontAttributes="Bold"/>
+    <Label Text="Adresse e-mail" TextColor="#9AAABD"/>
+    <Entry Placeholder="nom@entreprise.com" Keyboard="Email" Text="{Binding Email}" MaxLength="254"/>
+    <Label Text="Mot de passe" TextColor="#9AAABD"/>
+    <Entry Placeholder="Saisir le mot de passe" IsPassword="True" Text="{Binding Password}" MaxLength="128"/>
+    <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+    <Button Text="Se connecter  →" Command="{Binding SignInCommand}" IsEnabled="{Binding IsNotBusy}"/>
+    <Button Text="Mot de passe oublié ?" BackgroundColor="Transparent" TextColor="#FF8A00" Command="{Binding ForgotCommand}"/>
+    <Button Text="Créer un compte" Style="{StaticResource SecondaryButton}" Command="{Binding RegisterCommand}"/>
+   </VerticalStackLayout></Border>
+   <Label Text="Connexion sécurisée via le backend MaintenancePRO" FontSize="11" TextColor="#71849A" HorizontalTextAlignment="Center"/>
+  </VerticalStackLayout></ScrollView>
+
+  <!-- 01a / 01b : feuille « Mot de passe oublié » (bottom sheet) -->
+  <Grid IsVisible="{Binding IsForgotOpen}" BackgroundColor="#B3000000">
+   <Border VerticalOptions="End" Padding="20" Margin="0" BackgroundColor="#111F30">
+    <Border.StrokeShape><RoundRectangle CornerRadius="22,22,0,0"/></Border.StrokeShape>
+    <VerticalStackLayout Spacing="10">
+     <VerticalStackLayout Spacing="10" IsVisible="{Binding IsForgotForm}">
+      <Label Text="MOT DE PASSE OUBLIÉ" Style="{StaticResource Section}"/>
+      <Label Text="Recevoir un lien de réinitialisation" FontSize="19" FontAttributes="Bold"/>
+      <Entry Placeholder="nom@entreprise.com" Keyboard="Email" Text="{Binding ForgotEmail}" MaxLength="254"/>
+      <Button Text="Envoyer le lien" Command="{Binding SendLinkCommand}" IsEnabled="{Binding IsNotBusy}"/>
+      <Button Text="Annuler" Style="{StaticResource SecondaryButton}" Command="{Binding CloseForgotCommand}"/>
+     </VerticalStackLayout>
+     <VerticalStackLayout Spacing="10" IsVisible="{Binding ForgotSent}">
+      <Label Text="✔" FontSize="34" TextColor="#23C6A5" HorizontalTextAlignment="Center"/>
+      <Label Text="Lien envoyé" FontSize="19" FontAttributes="Bold" HorizontalTextAlignment="Center"/>
+      <Label Text="Si un compte existe pour cette adresse, un lien de réinitialisation lui a été envoyé. Si rien n'arrive, demande à un administrateur de réinitialiser ton mot de passe." Style="{StaticResource Hint}" HorizontalTextAlignment="Center"/>
+      <Button Text="Retour à la connexion" Command="{Binding CloseForgotCommand}"/>
+     </VerticalStackLayout>
+    </VerticalStackLayout>
+   </Border>
+  </Grid>
+ </Grid>
+</ContentPage>

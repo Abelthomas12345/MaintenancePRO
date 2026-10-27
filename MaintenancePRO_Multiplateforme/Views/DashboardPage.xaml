@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.DashboardPage" Title="Accueil">
+ <RefreshView IsRefreshing="{Binding IsBusy, Mode=OneWay}" Command="{Binding RefreshCommand}">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <Grid ColumnDefinitions="*,Auto" Margin="0,0,0,5">
+   <VerticalStackLayout Spacing="3"><Label Text="{Binding Greeting}" FontSize="15" TextColor="#9AAABD"/><Label Text="Vue d’ensemble" FontSize="25" FontAttributes="Bold"/><Label Text="{Binding RoleText}" Style="{StaticResource Section}"/></VerticalStackLayout>
+   <Border Grid.Column="1" Padding="10" BackgroundColor="#17283B" VerticalOptions="Center"><Label Text="{Binding Initials}" TextColor="#FF8A00" FontAttributes="Bold"/></Border>
+  </Grid>
+  <Label Text="{Binding Scope}" Style="{StaticResource Section}"/>
+  <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+   <Border><VerticalStackLayout Spacing="7"><Label Text="{Binding EquipmentLabel}" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding EquipmentCount}" FontSize="31" FontAttributes="Bold"/><Label Text="{Binding EquipmentHint}" FontSize="11" TextColor="#23C6A5"/></VerticalStackLayout></Border>
+   <Border Grid.Column="1"><VerticalStackLayout Spacing="7"><Label Text="EN PANNE" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding BrokenEquipment}" FontSize="31" FontAttributes="Bold" TextColor="#FF626D"/><Label Text="Équipements" FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+   <Border Grid.Row="1"><VerticalStackLayout Spacing="7"><Label Text="DOSSIERS ACTIFS" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding OpenBreakdowns}" FontSize="31" FontAttributes="Bold" TextColor="#FF8A00"/><Label Text="Pannes à traiter" FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+   <Border Grid.Row="1" Grid.Column="1" IsVisible="{Binding ShowInterventions}"><VerticalStackLayout Spacing="7"><Label Text="INTERVENTIONS" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding OpenInterventions}" FontSize="31" FontAttributes="Bold"/><Label Text="En cours" FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+   <Border Grid.Row="2" IsVisible="{Binding ShowApprovals}"><VerticalStackLayout Spacing="7"><Label Text="À APPROUVER" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding PendingApprovals}" FontSize="31" FontAttributes="Bold" TextColor="#FF8A00"/><Button Text="Voir" Style="{StaticResource SmallButton}" Command="{Binding OpenApprovalsCommand}" HorizontalOptions="Start"/></VerticalStackLayout></Border>
+   <Border Grid.Row="2" Grid.Column="1" IsVisible="{Binding ShowPendingAccounts}"><VerticalStackLayout Spacing="7"><Label Text="COMPTES EN ATTENTE" FontSize="10" TextColor="#9AAABD"/><Label Text="{Binding PendingAccounts}" FontSize="31" FontAttributes="Bold" TextColor="#FF8A00"/><Label Text="À activer" FontSize="11" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+  </Grid>
+  <Button Text="＋  Déclarer une panne" Command="{Binding NewBreakdownCommand}"/>
+  <Button Text="Voir les équipements  →" Style="{StaticResource SecondaryButton}" Command="{Binding OpenEquipmentCommand}"/>
+  <Grid ColumnDefinitions="*,Auto" Margin="0,12,0,4"><Label Text="Dernières pannes" FontSize="17" FontAttributes="Bold"/><Button Grid.Column="1" Text="Tout voir" Style="{StaticResource SmallButton}" Command="{Binding OpenHistoryCommand}"/></Grid>
+  <Label Text="Aucune panne pour le moment." Style="{StaticResource Hint}" IsVisible="{Binding NoBreakdowns}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentBreakdowns}" Spacing="8">
+   <BindableLayout.ItemTemplate><DataTemplate><Border><Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+    <Border WidthRequest="38" HeightRequest="38" Padding="0" BackgroundColor="#20364A" StrokeThickness="0" VerticalOptions="Start"><Label Text="⚙" FontSize="18" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+    <VerticalStackLayout Grid.Column="1" Spacing="4"><Label Text="{Binding Title}" FontAttributes="Bold"/><Label Text="{Binding Equipment.Name}" FontSize="12" TextColor="#9AAABD"/><Label Text="{Binding StatusLabel}" FontSize="11" TextColor="{Binding StatusColor}"/></VerticalStackLayout>
+   </Grid></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+  <Label Text="Dernières interventions" FontSize="17" FontAttributes="Bold" Margin="0,12,0,4" IsVisible="{Binding ShowInterventions}"/>
+  <VerticalStackLayout BindableLayout.ItemsSource="{Binding RecentInterventions}" Spacing="8" IsVisible="{Binding ShowInterventions}">
+   <BindableLayout.ItemTemplate><DataTemplate><Border><Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+    <VerticalStackLayout Spacing="4"><Label Text="{Binding Title}" FontAttributes="Bold"/><Label Text="{Binding Equipment.Name}" FontSize="12" TextColor="#9AAABD"/><Label Text="{Binding StatusLabel}" FontSize="11" TextColor="{Binding StatusColor}"/></VerticalStackLayout>
+    <Button Grid.Column="1" Text="Ouvrir →" Style="{StaticResource SmallButton}" VerticalOptions="Center" Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenInterventionCommand}" CommandParameter="{Binding .}"/>
+   </Grid></Border></DataTemplate></BindableLayout.ItemTemplate>
+  </VerticalStackLayout>
+ </VerticalStackLayout></ScrollView>
+ </RefreshView>
+</ContentPage>

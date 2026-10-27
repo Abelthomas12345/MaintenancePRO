@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class HistoryPage:ContentPage { public HistoryPage():this(new ViewModels.HistoryViewModel(new Services.DemoDataService())){} public HistoryPage(ViewModels.HistoryViewModel vm){InitializeComponent();BindingContext=vm;} }

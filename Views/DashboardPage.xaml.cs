@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class DashboardPage:ContentPage { public DashboardPage():this(new ViewModels.DashboardViewModel(new Services.DemoDataService())){} public DashboardPage(ViewModels.DashboardViewModel vm){InitializeComponent();BindingContext=vm;} }

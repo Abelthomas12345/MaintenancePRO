@@ -1,1 +1,0 @@
-namespace MaintenancePRO.ViewModels; public sealed class ReportsViewModel:BaseViewModel { public string Summary{get;set;}="Vue de démonstration"; public string Hint{get;set;}="Les indicateurs seront calculés depuis l’API dans la version connectée."; }

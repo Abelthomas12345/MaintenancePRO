@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class ReportsPage:ContentPage { public ReportsPage():this(new ViewModels.ReportsViewModel()){} public ReportsPage(ViewModels.ReportsViewModel vm){InitializeComponent();BindingContext=vm;} }

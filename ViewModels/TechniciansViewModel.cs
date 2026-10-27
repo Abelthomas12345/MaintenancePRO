@@ -1,1 +1,0 @@
-namespace MaintenancePRO.ViewModels; public sealed class TechniciansViewModel:BaseViewModel { public string[] Technicians{get;}={"A. N. Thomas — Technicien","M. Tchoumi — Technicien","S. Mbarga — Superviseur"}; }

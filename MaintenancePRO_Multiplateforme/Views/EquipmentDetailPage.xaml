@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.EquipmentDetailPage" Title="Fiche équipement">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="{Binding PageTitle}" Subtitle="{Binding PageSubtitle}"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+
+  <!-- Lecture -->
+  <Border IsVisible="{Binding IsView}"><VerticalStackLayout Spacing="10">
+   <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+    <Border WidthRequest="54" HeightRequest="54" Padding="0" BackgroundColor="#20364A" StrokeThickness="0"><Label Text="⚙" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center"/></Border>
+    <VerticalStackLayout Grid.Column="1" Spacing="5"><Label Text="{Binding Equipment.Name}" FontSize="20" FontAttributes="Bold"/><Label Text="{Binding Equipment.Code}" TextColor="#FF8A00"/></VerticalStackLayout>
+   </Grid>
+   <BoxView HeightRequest="1" Color="#29394D"/>
+   <Label Text="INFORMATIONS" Style="{StaticResource Section}"/>
+   <Label Text="Emplacement" Style="{StaticResource Hint}"/><Label Text="{Binding Equipment.Location}" FontAttributes="Bold"/>
+   <Label Text="Catégorie" Style="{StaticResource Hint}"/><Label Text="{Binding Equipment.Category}" FontAttributes="Bold"/>
+   <Label Text="État actuel" Style="{StaticResource Hint}"/><Label Text="{Binding Equipment.StatusLabel}" TextColor="{Binding Equipment.StatusColor}" FontAttributes="Bold"/>
+   <Label Text="Fabricant · modèle · série" Style="{StaticResource Hint}"/><Label Text="{Binding ExtraInfo}"/>
+   <Label Text="{Binding Equipment.Notes}" Style="{StaticResource Hint}"/>
+  </VerticalStackLayout></Border>
+  <Button Text="＋  Déclarer une panne" Command="{Binding DeclareCommand}" IsVisible="{Binding CanDeclare}"/>
+  <Button Text="Voir l’historique machine  →" Style="{StaticResource SecondaryButton}" Command="{Binding HistoryCommand}" IsVisible="{Binding IsView}"/>
+  <Button Text="Modifier" Style="{StaticResource SecondaryButton}" Command="{Binding EditCommand}" IsVisible="{Binding CanEdit}"/>
+  <Button Text="Supprimer" Style="{StaticResource DangerButton}" Command="{Binding DeleteCommand}" IsVisible="{Binding CanDelete}"/>
+
+  <!-- Ajout / modification : variantes du même écran -->
+  <Border IsVisible="{Binding IsForm}"><VerticalStackLayout Spacing="4">
+   <Label Text="Code *" /><Entry Text="{Binding Code}" Placeholder="Ex. EQ-004" MaxLength="40" IsEnabled="{Binding IsCreate}"/>
+   <Label Text="Nom *" /><Entry Text="{Binding EqName}" Placeholder="Ex. Compresseur principal" MaxLength="160"/>
+   <Label Text="Emplacement *" /><Entry Text="{Binding Location}" Placeholder="Ex. Atelier A" MaxLength="160"/>
+   <Label Text="Catégorie *" /><Entry Text="{Binding Category}" Placeholder="Ex. Pompe" MaxLength="80"/>
+   <Label Text="Fabricant" /><Entry Text="{Binding Manufacturer}" MaxLength="100"/>
+   <Label Text="Modèle" /><Entry Text="{Binding Model}" MaxLength="100"/>
+   <Label Text="Numéro de série" /><Entry Text="{Binding SerialNumber}" MaxLength="120"/>
+   <Label Text="Notes" /><Editor Text="{Binding Notes}" HeightRequest="90" MaxLength="1000"/>
+   <Label Text="État" IsVisible="{Binding IsEdit}"/>
+   <Picker ItemsSource="{Binding StatusOptions}" ItemDisplayBinding="{Binding Label}" SelectedItem="{Binding SelectedStatus}" IsVisible="{Binding IsEdit}"/>
+  </VerticalStackLayout></Border>
+  <Button Text="Enregistrer" Command="{Binding SaveCommand}" IsVisible="{Binding IsForm}" IsEnabled="{Binding IsNotBusy}"/>
+  <Button Text="Annuler" Style="{StaticResource SecondaryButton}" Command="{Binding CancelCommand}" IsVisible="{Binding IsForm}"/>
+ </VerticalStackLayout></ScrollView>
+</ContentPage>

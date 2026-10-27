@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:MaintenancePRO.Views" x:Class="MaintenancePRO.Views.ReportsPage" Title="Rapports">
+ <ScrollView><VerticalStackLayout Padding="18,18,18,28" Spacing="13">
+  <local:PageHeader Heading="Rapports" Subtitle="Indicateurs et performance de maintenance"/>
+  <ActivityIndicator IsRunning="{Binding IsBusy}" IsVisible="{Binding IsBusy}" Color="#FF8A00"/>
+  <Picker Title="Période" ItemsSource="{Binding Periods}" ItemDisplayBinding="{Binding Label}" SelectedItem="{Binding Period}"/>
+  <Border><VerticalStackLayout Spacing="12">
+   <Label Text="SYNTHÈSE" Style="{StaticResource Section}"/>
+   <Label Text="{Binding Summary}" FontSize="20" FontAttributes="Bold"/>
+   <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+    <Border Padding="12"><VerticalStackLayout Spacing="6"><Label Text="Disponibilité" FontSize="11" TextColor="#9AAABD"/><Label Text="{Binding Availability}" FontSize="27" FontAttributes="Bold"/><Label Text="du parc (maintenant)" FontSize="10" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+    <Border Grid.Column="1" Padding="12"><VerticalStackLayout Spacing="6"><Label Text="MTTR" FontSize="11" TextColor="#9AAABD"/><Label Text="{Binding Mttr}" FontSize="27" FontAttributes="Bold"/><Label Text="temps moyen de réparation" FontSize="10" TextColor="#9AAABD"/></VerticalStackLayout></Border>
+   </Grid>
+   <Label Text="{Binding Hint}" Style="{StaticResource Hint}"/>
+   <Label Text="PANNES PAR SÉVÉRITÉ" Style="{StaticResource Section}"/>
+   <VerticalStackLayout BindableLayout.ItemsSource="{Binding BySeverity}"><BindableLayout.ItemTemplate><DataTemplate><Label Text="{Binding Text}"/></DataTemplate></BindableLayout.ItemTemplate></VerticalStackLayout>
+   <Label Text="INTERVENTIONS PAR STATUT" Style="{StaticResource Section}"/>
+   <VerticalStackLayout BindableLayout.ItemsSource="{Binding ByStatus}"><BindableLayout.ItemTemplate><DataTemplate><Label Text="{Binding Text}"/></DataTemplate></BindableLayout.ItemTemplate></VerticalStackLayout>
+  </VerticalStackLayout></Border>
+ </VerticalStackLayout></ScrollView>
+</ContentPage>

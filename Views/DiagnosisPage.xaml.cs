@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class DiagnosisPage:ContentPage { public DiagnosisPage():this(new ViewModels.DiagnosisViewModel()){} public DiagnosisPage(ViewModels.DiagnosisViewModel vm){InitializeComponent();BindingContext=vm;} }

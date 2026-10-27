@@ -1,1 +1,0 @@
-namespace MaintenancePRO.Views; public partial class EquipmentDetailPage:ContentPage { public EquipmentDetailPage(ViewModels.EquipmentDetailViewModel vm){InitializeComponent();BindingContext=vm;} public EquipmentDetailPage():this(new ViewModels.EquipmentDetailViewModel()){} }
